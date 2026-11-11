@@ -1,0 +1,47 @@
+name: CI
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    name: verify (${{ matrix.target }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [wasm-gc, wasm, js, native]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+      - name: Install pinned MoonBit compiler and core
+        run: bash scripts/install-ci.sh "$RUNNER_TEMP/moonshock-toolchain"
+      - name: Verify compiler meets contest floor
+        run: |
+          moonc -v
+          moonc -v | python3 -c 'import re,sys; v=tuple(map(int,re.search(r"v(\d+)\.(\d+)\.(\d+)",sys.stdin.read()).groups())); assert v >= (0,10,16),v'
+      - name: Public interface and format
+        run: |
+          moon info
+          moon fmt --check
+          git diff --exit-code -- '*.mbti'
+      - name: Strict check
+        run: moon check --target ${{ matrix.target }} --deny-warn
+      - name: Build
+        run: moon build --target ${{ matrix.target }} --deny-warn
+      - name: Test core paths and boundaries
+        run: moon test --target ${{ matrix.target }} --deny-warn
+      - name: Assert complete user workflows
+        run: |
+          moon run examples/sod --target ${{ matrix.target }}
+          moon run examples/restart --target ${{ matrix.target }}
+          moon run examples/study --target ${{ matrix.target }}
+      - name: Independent numerical reference
+        run: python3 scripts/verify_oracle.py --target ${{ matrix.target }}
+      - name: Production source inventory
+        run: python3 scripts/source_inventory.py
