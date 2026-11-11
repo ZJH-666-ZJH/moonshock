@@ -11,6 +11,8 @@ pub fn boundary_state(Array[Primitive], Int32, Boundaries) -> Primitive raise Ga
 
 pub fn reconstruct(Array[Primitive], Boundaries, Reconstruction) -> (Array[Primitive], Array[Primitive]) raise GasError
 
+pub fn restore_checkpoint(String) -> Simulation raise GasError
+
 // Errors
 pub suberror GasError {
   Invalid(String)
@@ -186,6 +188,7 @@ pub struct Simulation {
   initial_totals : Conserved
 } derive(@debug.Debug)
 pub fn Simulation::cells(Self) -> Array[Conserved]
+pub fn Simulation::checkpoint(Self) -> String raise GasError
 pub fn Simulation::conservation_residual(Self) -> Conserved raise GasError
 pub fn Simulation::diagnostics(Self) -> Diagnostics raise GasError
 pub fn Simulation::gas(Self) -> Gas
