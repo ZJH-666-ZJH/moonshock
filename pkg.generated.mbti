@@ -70,6 +70,7 @@ pub fn Gas::not_equal(Self, Self) -> Bool
 pub fn Gas::numerical_flux(Self, Primitive, Primitive, FluxMethod) -> Conserved raise GasError
 pub fn Gas::physical_flux(Self, Primitive) -> Conserved raise GasError
 pub fn Gas::primitive(Self, Conserved) -> Primitive raise GasError
+pub fn Gas::riemann(Self, Primitive, Primitive) -> Riemann raise GasError
 pub fn Gas::sound_speed(Self, Primitive) -> Double raise GasError
 pub fn Gas::specific_energy(Self, Primitive) -> Double raise GasError
 pub fn Gas::to_repr(Self) -> @debug.Repr
@@ -105,6 +106,22 @@ pub fn Primitive::not_equal(Self, Self) -> Bool
 pub fn Primitive::to_json(Self) -> Json
 pub fn Primitive::to_repr(Self) -> @debug.Repr
 pub fn Primitive::validate(Self) -> Unit raise GasError
+
+pub struct Riemann {
+  gas : Gas
+  left : Primitive
+  right : Primitive
+  pressure : Double
+  velocity : Double
+  residual : Double
+  iterations : Int32
+} derive(@debug.Debug)
+pub fn Riemann::iterations(Self) -> Int32
+pub fn Riemann::pressure(Self) -> Double
+pub fn Riemann::residual(Self) -> Double
+pub fn Riemann::star_density(Self, Bool) -> Double raise GasError
+pub fn Riemann::to_repr(Self) -> @debug.Repr
+pub fn Riemann::velocity(Self) -> Double
 
 // Type aliases
 
