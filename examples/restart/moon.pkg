@@ -1,0 +1,5 @@
+pkgtype(kind: "executable")
+
+import {
+  "ZJH-666-ZJH/moonshock" @gas,
+}
