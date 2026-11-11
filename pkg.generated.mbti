@@ -92,6 +92,7 @@ pub fn Gas::diagnostics(Self, Mesh, Array[Conserved]) -> Diagnostics raise GasEr
 pub fn Gas::entropy_wave(Self, Mesh, Double, Double, Double, Double, Double) -> Array[Conserved] raise GasError
 pub fn Gas::equal(Self, Self) -> Bool
 pub fn Gas::gamma(Self) -> Double
+pub fn Gas::import_csv(Self, Mesh, String) -> Array[Conserved] raise GasError
 pub fn Gas::interface_fluxes(Self, Mesh, Array[Conserved], Boundaries, Reconstruction, FluxMethod) -> Array[Conserved] raise GasError
 pub fn Gas::mach(Self, Primitive) -> Double raise GasError
 pub fn Gas::max_speed(Self, Primitive) -> Double raise GasError
@@ -194,6 +195,7 @@ pub fn Simulation::diagnostics(Self) -> Diagnostics raise GasError
 pub fn Simulation::gas(Self) -> Gas
 pub fn Simulation::mesh(Self) -> Mesh
 pub fn Simulation::new(Gas, Mesh, Array[Conserved], time? : Double) -> Self raise GasError
+pub fn Simulation::profile_csv(Self) -> String raise GasError
 pub fn Simulation::retries(Self) -> Int32
 pub fn Simulation::run_until(Self, Double, SolverConfig) -> Self raise GasError
 pub fn Simulation::steps(Self) -> Int32
