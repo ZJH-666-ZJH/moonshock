@@ -1,5 +1,6 @@
 ///|
 /// Validated policy for a bounded simulation. Read-only after construction.
+#derive(Debug)
 pub struct SolverConfig {
   boundaries : Boundaries
   reconstruction : Reconstruction
@@ -8,7 +9,7 @@ pub struct SolverConfig {
   cfl : Double
   max_steps : Int32
   max_retries : Int32
-} derive(Debug)
+}
 
 ///|
 pub fn SolverConfig::new(
@@ -47,6 +48,7 @@ pub fn SolverConfig::standard() -> SolverConfig {
 
 ///|
 /// An immutable snapshot accessor always returns a copy of its mutable array.
+#derive(Debug)
 pub struct Simulation {
   gas : Gas
   mesh : Mesh
@@ -56,7 +58,7 @@ pub struct Simulation {
   retries : Int32
   boundary_change : Conserved
   initial_totals : Conserved
-} derive(Debug)
+}
 
 ///|
 pub fn Simulation::new(

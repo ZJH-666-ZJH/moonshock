@@ -77,11 +77,12 @@ pub fn Gas::entropy_wave(
 }
 
 ///|
+#derive(Debug, Eq)
 pub(all) enum TubeCase {
   Sod
   Lax
   Contact
-} derive(Debug, Eq)
+}
 
 ///|
 pub fn TubeCase::states(self : TubeCase) -> (Primitive, Primitive) {

@@ -1,5 +1,6 @@
 ///|
 /// Integrated conserved quantities, minima and resolution-independent diagnostics.
+#derive(Debug, ToJson)
 pub(all) struct Diagnostics {
   totals : Conserved
   min_density : Double
@@ -9,7 +10,7 @@ pub(all) struct Diagnostics {
   density_variation : Double
   kinetic_energy : Double
   entropy_integral : Double
-} derive(Debug, ToJson)
+}
 
 ///|
 /// Compensated summation reduces cancellation in long runs and remapping audits.
@@ -85,11 +86,12 @@ pub fn Gas::diagnostics(
 }
 
 ///|
+#derive(Debug, ToJson)
 pub(all) struct ErrorNorm {
   l1 : Double
   l2 : Double
   linf : Double
-} derive(Debug, ToJson)
+}
 
 ///|
 /// Compare cell-average primitives to an exact center-value reference.

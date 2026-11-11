@@ -1,23 +1,26 @@
 ///|
 /// Recoverable invalid input or numerical failure. No invalid state is silently clipped.
+#derive(Debug)
 pub suberror GasError {
   Invalid(String)
   Numerical(String)
-} derive(Debug)
+}
 
 ///|
 /// Primitive state for one ideal gas. Units must be consistent across the experiment.
+#derive(Debug, Eq, ToJson, FromJson)
 pub(all) struct Primitive {
   rho : Double
   velocity : Double
   pressure : Double
-} derive(Debug, Eq, ToJson, FromJson)
+}
 
 ///|
 /// A finite heat capacity ratio greater than one.
+#derive(Debug, Eq)
 pub struct Gas {
   gamma : Double
-} derive(Debug, Eq)
+}
 
 ///|
 fn finite(x : Double) -> Bool {

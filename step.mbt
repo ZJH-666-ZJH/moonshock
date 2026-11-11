@@ -1,16 +1,18 @@
 ///|
 /// Explicit Euler or strong-stability-preserving two-stage Runge-Kutta.
+#derive(Debug, Eq)
 pub(all) enum Integrator {
   ForwardEuler
   SspRk2
-} derive(Debug, Eq)
+}
 
 ///|
 /// A candidate step and the boundary contribution used in its conservation audit.
+#derive(Debug)
 pub(all) struct StepResult {
   cells : Array[Conserved]
   boundary_change : Conserved
-} derive(Debug)
+}
 
 ///|
 pub fn Gas::stable_dt(

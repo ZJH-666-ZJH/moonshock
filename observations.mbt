@@ -1,11 +1,12 @@
 ///|
 /// A spatial cell-average probe with no interpolation across discontinuities.
+#derive(Debug, ToJson)
 pub(all) struct Probe {
   x : Double
   index : Int32
   state : Primitive
   mach : Double
-} derive(Debug, ToJson)
+}
 
 ///|
 pub fn Simulation::probes(
@@ -26,6 +27,7 @@ pub fn Simulation::probes(
 
 ///|
 /// Lightweight monitor entry; no full cell array is retained.
+#derive(Debug, ToJson)
 pub(all) struct Monitor {
   time : Double
   steps : Int32
@@ -33,7 +35,7 @@ pub(all) struct Monitor {
   diagnostics : Diagnostics
   conservation_residual : Conserved
   probes : Array[Probe]
-} derive(Debug, ToJson)
+}
 
 ///|
 pub fn Simulation::monitor(

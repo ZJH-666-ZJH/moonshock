@@ -14,7 +14,7 @@
 
 ## 环境与安装
 
-要求 **moonc ≥ 0.10.16**。开发过程的兼容基线为 `v0.10.16+b1a0e846e`；CI 固定使用 `v0.10.20+65efd5b93`，不随 latest 漂移。可在 [MoonBit 官网](https://www.moonbitlang.com/download) 安装工具链，并运行 `moon version --all` 核对编译器。JS 运行需要 Node.js；native 需要 C 编译器。库无第三方运行依赖。
+发布版本要求 **moonc 0.10.20+65efd5b93**（高于赛事要求的 0.10.16），采用该版本的 `#derive` 语法；CI 固定使用该编译器，不随 latest 漂移。可在 [MoonBit 官网](https://www.moonbitlang.com/download) 安装工具链，并运行 `moon version --all` 核对编译器。JS 运行需要 Node.js；native 需要 C 编译器。库无第三方运行依赖。
 
 创建一个空目录并执行：
 

@@ -1,5 +1,6 @@
 ///|
 /// A complete named shock-tube experiment. Construction validates all inputs.
+#derive(Debug)
 pub struct Experiment {
   name : String
   gas : Gas
@@ -9,7 +10,7 @@ pub struct Experiment {
   interface_at : Double
   end_time : Double
   config : SolverConfig
-} derive(Debug)
+}
 
 ///|
 pub fn Experiment::new(
@@ -38,12 +39,13 @@ pub fn Experiment::new(
 }
 
 ///|
+#derive(Debug)
 pub(all) struct ExperimentResult {
   name : String
   simulation : Simulation
   density_error : ErrorNorm
   reference_unaffected_by_boundaries : Bool
-} derive(Debug)
+}
 
 ///|
 /// Runs a gas experiment and labels whether waves have reached either boundary.
@@ -80,10 +82,11 @@ pub fn Experiment::run(self : Experiment) -> ExperimentResult raise GasError {
 }
 
 ///|
+#derive(Debug)
 pub(all) enum BatchOutcome {
   Succeeded(ExperimentResult)
   Failed(String, String)
-} derive(Debug)
+}
 
 ///|
 /// Isolated outcomes let an embedding application report a numerical failure

@@ -1,5 +1,6 @@
 ///|
 /// One completed resolution of an analytic periodic entropy-wave study.
+#derive(Debug)
 pub(all) struct ConvergenceRow {
   cells : Int32
   dx : Double
@@ -7,7 +8,7 @@ pub(all) struct ConvergenceRow {
   observed_order : Double?
   steps : Int32
   conservation_residual : Conserved
-} derive(Debug)
+}
 
 ///|
 /// Run a resolution study against analytic cell averages, not midpoint samples.

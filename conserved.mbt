@@ -1,10 +1,11 @@
 ///|
 /// Cell average or integrated flux: density, momentum and total energy.
+#derive(Debug, Eq, ToJson, FromJson)
 pub(all) struct Conserved {
   mass : Double
   momentum : Double
   energy : Double
-} derive(Debug, Eq, ToJson, FromJson)
+}
 
 ///|
 pub fn Conserved::zero() -> Conserved {

@@ -1,11 +1,12 @@
 ///|
 /// A bounded uniform mesh; coordinates describe cell edges.
+#derive(Debug, Eq)
 pub struct Mesh {
   left : Double
   right : Double
   cells : Int32
   dx : Double
-} derive(Debug, Eq)
+}
 
 ///|
 pub fn Mesh::new(
@@ -85,16 +86,18 @@ pub fn Mesh::locate(self : Mesh, x : Double) -> Int32 raise GasError {
 
 ///|
 /// Both ends are periodic together, or each end independently transmits/reflects.
+#derive(Debug, Eq)
 pub(all) enum EndBoundary {
   Outflow
   Wall
-} derive(Debug, Eq)
+}
 
 ///|
+#derive(Debug, Eq)
 pub(all) enum Boundaries {
   Periodic
   Ends(EndBoundary, EndBoundary)
-} derive(Debug, Eq)
+}
 
 ///|
 fn reflected(q : Primitive) -> Primitive {

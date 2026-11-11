@@ -1,10 +1,11 @@
 ///|
 /// Limited piecewise linear primitive reconstruction, or piecewise constant.
+#derive(Debug, Eq)
 pub(all) enum Reconstruction {
   Constant
   Minmod
   MonotonizedCentral
-} derive(Debug, Eq)
+}
 
 ///|
 fn limited(a : Double, b : Double, mode : Reconstruction) -> Double {

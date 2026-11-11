@@ -1,5 +1,6 @@
 ///|
 /// Exact non-vacuum ideal-gas Riemann star state and root residual.
+#derive(Debug)
 pub struct Riemann {
   gas : Gas
   left : Primitive
@@ -8,7 +9,7 @@ pub struct Riemann {
   velocity : Double
   residual : Double
   iterations : Int32
-} derive(Debug)
+}
 
 ///|
 pub fn Riemann::pressure(self : Riemann) -> Double {

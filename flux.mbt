@@ -1,9 +1,10 @@
 ///|
 /// HLL uses two signal speeds; Rusanov uses a symmetric local maximum.
+#derive(Debug, Eq)
 pub(all) enum FluxMethod {
   Hll
   Rusanov
-} derive(Debug, Eq)
+}
 
 ///|
 pub fn Gas::numerical_flux(
