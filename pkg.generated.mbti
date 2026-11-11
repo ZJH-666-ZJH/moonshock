@@ -43,6 +43,19 @@ pub fn Conserved::to_json(Self) -> Json
 pub fn Conserved::to_repr(Self) -> @debug.Repr
 pub fn Conserved::zero() -> Self
 
+pub(all) struct Diagnostics {
+  totals : Conserved
+  min_density : Double
+  min_pressure : Double
+  max_mach : Double
+  max_speed : Double
+  density_variation : Double
+  kinetic_energy : Double
+  entropy_integral : Double
+} derive(ToJson, @debug.Debug)
+pub fn Diagnostics::to_json(Self) -> Json
+pub fn Diagnostics::to_repr(Self) -> @debug.Repr
+
 pub(all) enum EndBoundary {
   Outflow
   Wall
@@ -50,6 +63,14 @@ pub(all) enum EndBoundary {
 pub fn EndBoundary::equal(Self, Self) -> Bool
 pub fn EndBoundary::not_equal(Self, Self) -> Bool
 pub fn EndBoundary::to_repr(Self) -> @debug.Repr
+
+pub(all) struct ErrorNorm {
+  l1 : Double
+  l2 : Double
+  linf : Double
+} derive(ToJson, @debug.Debug)
+pub fn ErrorNorm::to_json(Self) -> Json
+pub fn ErrorNorm::to_repr(Self) -> @debug.Repr
 
 pub(all) enum FluxMethod {
   Hll
@@ -64,6 +85,8 @@ pub struct Gas {
 } derive(Eq, @debug.Debug)
 pub fn Gas::advance(Self, Mesh, Array[Conserved], Double, Boundaries, Reconstruction, FluxMethod, Integrator) -> StepResult raise GasError
 pub fn Gas::conserved(Self, Primitive) -> Conserved raise GasError
+pub fn Gas::density_error(Self, Mesh, Array[Conserved], Array[Primitive]) -> ErrorNorm raise GasError
+pub fn Gas::diagnostics(Self, Mesh, Array[Conserved]) -> Diagnostics raise GasError
 pub fn Gas::entropy_wave(Self, Mesh, Double, Double, Double, Double, Double) -> Array[Conserved] raise GasError
 pub fn Gas::equal(Self, Self) -> Bool
 pub fn Gas::gamma(Self) -> Double
