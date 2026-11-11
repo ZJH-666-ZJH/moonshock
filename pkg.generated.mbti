@@ -61,6 +61,7 @@ pub struct Gas {
   gamma : Double
 } derive(Eq, @debug.Debug)
 pub fn Gas::conserved(Self, Primitive) -> Conserved raise GasError
+pub fn Gas::entropy_wave(Self, Mesh, Double, Double, Double, Double, Double) -> Array[Conserved] raise GasError
 pub fn Gas::equal(Self, Self) -> Bool
 pub fn Gas::gamma(Self) -> Double
 pub fn Gas::mach(Self, Primitive) -> Double raise GasError
@@ -71,9 +72,11 @@ pub fn Gas::numerical_flux(Self, Primitive, Primitive, FluxMethod) -> Conserved 
 pub fn Gas::physical_flux(Self, Primitive) -> Conserved raise GasError
 pub fn Gas::primitive(Self, Conserved) -> Primitive raise GasError
 pub fn Gas::riemann(Self, Primitive, Primitive) -> Riemann raise GasError
+pub fn Gas::shock_tube(Self, Mesh, Primitive, Primitive, Double) -> Array[Conserved] raise GasError
 pub fn Gas::sound_speed(Self, Primitive) -> Double raise GasError
 pub fn Gas::specific_energy(Self, Primitive) -> Double raise GasError
 pub fn Gas::to_repr(Self) -> @debug.Repr
+pub fn Gas::uniform(Self, Mesh, Primitive) -> Array[Conserved] raise GasError
 pub fn Gas::validate_cells(Self, Mesh, Array[Conserved]) -> Unit raise GasError
 
 pub struct Mesh {
@@ -119,12 +122,23 @@ pub struct Riemann {
 pub fn Riemann::at(Self, Double, Double, Double) -> Primitive raise GasError
 pub fn Riemann::iterations(Self) -> Int32
 pub fn Riemann::pressure(Self) -> Double
+pub fn Riemann::profile(Self, Mesh, Double, Double) -> Array[Primitive] raise GasError
 pub fn Riemann::residual(Self) -> Double
 pub fn Riemann::sample(Self, Double) -> Primitive raise GasError
 pub fn Riemann::star_density(Self, Bool) -> Double raise GasError
 pub fn Riemann::to_repr(Self) -> @debug.Repr
 pub fn Riemann::velocity(Self) -> Double
 pub fn Riemann::wave_speeds(Self) -> Array[Double] raise GasError
+
+pub(all) enum TubeCase {
+  Sod
+  Lax
+  Contact
+} derive(Eq, @debug.Debug)
+pub fn TubeCase::equal(Self, Self) -> Bool
+pub fn TubeCase::not_equal(Self, Self) -> Bool
+pub fn TubeCase::states(Self) -> (Primitive, Primitive)
+pub fn TubeCase::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 
