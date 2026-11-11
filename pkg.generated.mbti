@@ -16,14 +16,34 @@ pub suberror GasError {
 pub fn GasError::to_repr(Self) -> @debug.Repr
 
 // Types and methods
+pub(all) struct Conserved {
+  mass : Double
+  momentum : Double
+  energy : Double
+} derive(Eq, ToJson, @debug.Debug, @json.FromJson)
+pub fn Conserved::equal(Self, Self) -> Bool
+pub fn Conserved::from_json(Json, @json.JsonPath) -> Self raise @json.JsonDecodeError
+pub fn Conserved::max_abs(Self) -> Double
+pub fn Conserved::minus(Self, Self) -> Self
+pub fn Conserved::not_equal(Self, Self) -> Bool
+pub fn Conserved::plus(Self, Self) -> Self
+pub fn Conserved::scaled(Self, Double) -> Self
+pub fn Conserved::to_json(Self) -> Json
+pub fn Conserved::to_repr(Self) -> @debug.Repr
+pub fn Conserved::zero() -> Self
+
 pub struct Gas {
   gamma : Double
 } derive(Eq, @debug.Debug)
+pub fn Gas::conserved(Self, Primitive) -> Conserved raise GasError
 pub fn Gas::equal(Self, Self) -> Bool
 pub fn Gas::gamma(Self) -> Double
 pub fn Gas::mach(Self, Primitive) -> Double raise GasError
+pub fn Gas::max_speed(Self, Primitive) -> Double raise GasError
 pub fn Gas::new(Double) -> Self raise GasError
 pub fn Gas::not_equal(Self, Self) -> Bool
+pub fn Gas::physical_flux(Self, Primitive) -> Conserved raise GasError
+pub fn Gas::primitive(Self, Conserved) -> Primitive raise GasError
 pub fn Gas::sound_speed(Self, Primitive) -> Double raise GasError
 pub fn Gas::specific_energy(Self, Primitive) -> Double raise GasError
 pub fn Gas::to_repr(Self) -> @debug.Repr
