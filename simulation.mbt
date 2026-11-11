@@ -142,6 +142,9 @@ pub fn Simulation::run_until(
   let mut retries = 0
   let mut boundary_change = self.boundary_change
   while time < end_time {
+    if self.steps + steps >= 1000000000 {
+      raise Numerical("cumulative step counter exhausted")
+    }
     if steps >= config.max_steps {
       raise Numerical("accepted-step budget exhausted")
     }
@@ -172,6 +175,9 @@ pub fn Simulation::run_until(
         }
         dt = dt * 0.5
         attempt = attempt + 1
+        if self.retries + retries >= 1000000000 {
+          raise Numerical("cumulative retry counter exhausted")
+        }
         retries = retries + 1
       }
     }

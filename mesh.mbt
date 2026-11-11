@@ -21,7 +21,11 @@ pub fn Mesh::new(
     raise Invalid("mesh needs finite increasing edges and 2..1000000 cells")
   }
   let dx = (right - left) / cells.to_double()
-  if !finite(dx) || dx <= 0.0 || left + dx <= left || right - dx >= right {
+  if !finite(dx) ||
+    dx <= 0.0 ||
+    left + dx <= left ||
+    right - dx >= right ||
+    dx < 3.6e-15 * left.abs().max(right.abs()) {
     raise Invalid("mesh spacing is not representable")
   }
   { left, right, cells, dx, }

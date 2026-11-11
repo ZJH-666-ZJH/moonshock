@@ -14,16 +14,17 @@ pub fn Gas::remap(
   let output = []
   let mut from = 0
   for j in 0..<target.cells {
-    let a = target.edge(j)
-    let b = target.edge(j + 1)
-    while from + 1 < source.cells && source.edge(from + 1) <= a {
+    let a = j.to_double() * target.dx
+    let b = (j + 1).to_double() * target.dx
+    while from + 1 < source.cells && (from + 1).to_double() * source.dx <= a {
       from = from + 1
     }
     let mut i = from
     let mut total = Conserved::zero()
     let mut covered = 0.0
-    while i < source.cells && source.edge(i) < b {
-      let overlap = source.edge(i + 1).min(b) - source.edge(i).max(a)
+    while i < source.cells && i.to_double() * source.dx < b {
+      let overlap = ((i + 1).to_double() * source.dx).min(b) -
+        (i.to_double() * source.dx).max(a)
       if overlap > 0.0 {
         total = total.plus(cells[i].scaled(overlap))
         covered = covered + overlap
@@ -34,7 +35,7 @@ pub fn Gas::remap(
     if covered <= 0.0 || (covered - width).abs() > 1.0e-10 * width {
       raise Numerical("remap overlap coverage failed")
     }
-    let u = total.scaled(1.0 / width)
+    let u = total.scaled(1.0 / target.dx)
     ignore(self.primitive(u))
     output.push(u)
   }

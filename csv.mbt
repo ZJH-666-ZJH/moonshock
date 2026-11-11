@@ -57,7 +57,9 @@ pub fn Gas::import_csv(
     let expected = mesh.center(i)
     // Absolute tolerance is scaled by cell width, avoiding accidental row swaps
     // on small domains offset by a large coordinate.
-    let tolerance = (1.0e-8 * mesh.dx).max(4.0e-15 * expected.abs())
+    let tolerance = (1.0e-8 * mesh.dx)
+      .max(4.0e-15 * expected.abs())
+      .min(0.25 * mesh.dx)
     if (x - expected).abs() > tolerance {
       raise Invalid("CSV coordinate does not match mesh center")
     }
