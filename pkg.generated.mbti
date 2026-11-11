@@ -11,6 +11,8 @@ pub fn boundary_state(Array[Primitive], Int32, Boundaries) -> Primitive raise Ga
 
 pub fn monitors_json(Array[Monitor]) -> String
 
+pub fn parse_experiment(String) -> Experiment raise GasError
+
 pub fn reconstruct(Array[Primitive], Boundaries, Reconstruction) -> (Array[Primitive], Array[Primitive]) raise GasError
 
 pub fn restore_checkpoint(String) -> Simulation raise GasError
@@ -104,6 +106,7 @@ pub struct Experiment {
   end_time : Double
   config : SolverConfig
 } derive(@debug.Debug)
+pub fn Experiment::json_config(Self) -> String
 pub fn Experiment::new(String, Gas, Mesh, Primitive, Primitive, Double, Double, SolverConfig) -> Self raise GasError
 pub fn Experiment::run(Self) -> ExperimentResult raise GasError
 pub fn Experiment::to_repr(Self) -> @debug.Repr
