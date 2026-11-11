@@ -17,6 +17,8 @@ curl --fail --silent --show-error --location --connect-timeout 15 --max-time 90 
 printf '%s  %s\n' '80d987523308fa490eba9f1baf98df996a5a7891e118357553b7c2608c0597c5' "$work/compiler.tar.gz" \
   'd7982eed233e0c4f933f566274cc9777466447e0d5b633006e8bf18975c7c833' "$work/core.zip" | sha256sum --check
 tar -xzf "$work/compiler.tar.gz" -C "$install_root"
+# The official archive can store tools without executable mode bits.
+find "$install_root/bin" -type f -exec chmod u+x {} +
 python3 - "$work/core.zip" "$install_root/lib" <<'PY'
 import sys, zipfile
 with zipfile.ZipFile(sys.argv[1]) as archive:
