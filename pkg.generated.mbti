@@ -9,6 +9,8 @@ import {
 // Values
 pub fn boundary_state(Array[Primitive], Int32, Boundaries) -> Primitive raise GasError
 
+pub fn reconstruct(Array[Primitive], Boundaries, Reconstruction) -> (Array[Primitive], Array[Primitive]) raise GasError
+
 // Errors
 pub suberror GasError {
   Invalid(String)
@@ -64,6 +66,7 @@ pub fn Gas::conserved(Self, Primitive) -> Conserved raise GasError
 pub fn Gas::entropy_wave(Self, Mesh, Double, Double, Double, Double, Double) -> Array[Conserved] raise GasError
 pub fn Gas::equal(Self, Self) -> Bool
 pub fn Gas::gamma(Self) -> Double
+pub fn Gas::interface_fluxes(Self, Mesh, Array[Conserved], Boundaries, Reconstruction, FluxMethod) -> Array[Conserved] raise GasError
 pub fn Gas::mach(Self, Primitive) -> Double raise GasError
 pub fn Gas::max_speed(Self, Primitive) -> Double raise GasError
 pub fn Gas::new(Double) -> Self raise GasError
@@ -109,6 +112,15 @@ pub fn Primitive::not_equal(Self, Self) -> Bool
 pub fn Primitive::to_json(Self) -> Json
 pub fn Primitive::to_repr(Self) -> @debug.Repr
 pub fn Primitive::validate(Self) -> Unit raise GasError
+
+pub(all) enum Reconstruction {
+  Constant
+  Minmod
+  MonotonizedCentral
+} derive(Eq, @debug.Debug)
+pub fn Reconstruction::equal(Self, Self) -> Bool
+pub fn Reconstruction::not_equal(Self, Self) -> Bool
+pub fn Reconstruction::to_repr(Self) -> @debug.Repr
 
 pub struct Riemann {
   gas : Gas
