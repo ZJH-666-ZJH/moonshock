@@ -175,6 +175,41 @@ pub fn Riemann::to_repr(Self) -> @debug.Repr
 pub fn Riemann::velocity(Self) -> Double
 pub fn Riemann::wave_speeds(Self) -> Array[Double] raise GasError
 
+pub struct Simulation {
+  gas : Gas
+  mesh : Mesh
+  cells : Array[Conserved]
+  time : Double
+  steps : Int32
+  retries : Int32
+  boundary_change : Conserved
+  initial_totals : Conserved
+} derive(@debug.Debug)
+pub fn Simulation::cells(Self) -> Array[Conserved]
+pub fn Simulation::conservation_residual(Self) -> Conserved raise GasError
+pub fn Simulation::diagnostics(Self) -> Diagnostics raise GasError
+pub fn Simulation::gas(Self) -> Gas
+pub fn Simulation::mesh(Self) -> Mesh
+pub fn Simulation::new(Gas, Mesh, Array[Conserved], time? : Double) -> Self raise GasError
+pub fn Simulation::retries(Self) -> Int32
+pub fn Simulation::run_until(Self, Double, SolverConfig) -> Self raise GasError
+pub fn Simulation::steps(Self) -> Int32
+pub fn Simulation::time(Self) -> Double
+pub fn Simulation::to_repr(Self) -> @debug.Repr
+
+pub struct SolverConfig {
+  boundaries : Boundaries
+  reconstruction : Reconstruction
+  flux : FluxMethod
+  integrator : Integrator
+  cfl : Double
+  max_steps : Int32
+  max_retries : Int32
+} derive(@debug.Debug)
+pub fn SolverConfig::new(Boundaries, Reconstruction, FluxMethod, Integrator, cfl? : Double, max_steps? : Int32, max_retries? : Int32) -> Self raise GasError
+pub fn SolverConfig::standard() -> Self
+pub fn SolverConfig::to_repr(Self) -> @debug.Repr
+
 pub(all) struct StepResult {
   cells : Array[Conserved]
   boundary_change : Conserved
