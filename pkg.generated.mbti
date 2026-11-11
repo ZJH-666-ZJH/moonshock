@@ -7,6 +7,7 @@ import {
 }
 
 // Values
+pub fn boundary_state(Array[Primitive], Int32, Boundaries) -> Primitive raise GasError
 
 // Errors
 pub suberror GasError {
@@ -16,6 +17,14 @@ pub suberror GasError {
 pub fn GasError::to_repr(Self) -> @debug.Repr
 
 // Types and methods
+pub(all) enum Boundaries {
+  Periodic
+  Ends(EndBoundary, EndBoundary)
+} derive(Eq, @debug.Debug)
+pub fn Boundaries::equal(Self, Self) -> Bool
+pub fn Boundaries::not_equal(Self, Self) -> Bool
+pub fn Boundaries::to_repr(Self) -> @debug.Repr
+
 pub(all) struct Conserved {
   mass : Double
   momentum : Double
@@ -32,6 +41,14 @@ pub fn Conserved::to_json(Self) -> Json
 pub fn Conserved::to_repr(Self) -> @debug.Repr
 pub fn Conserved::zero() -> Self
 
+pub(all) enum EndBoundary {
+  Outflow
+  Wall
+} derive(Eq, @debug.Debug)
+pub fn EndBoundary::equal(Self, Self) -> Bool
+pub fn EndBoundary::not_equal(Self, Self) -> Bool
+pub fn EndBoundary::to_repr(Self) -> @debug.Repr
+
 pub struct Gas {
   gamma : Double
 } derive(Eq, @debug.Debug)
@@ -47,6 +64,25 @@ pub fn Gas::primitive(Self, Conserved) -> Primitive raise GasError
 pub fn Gas::sound_speed(Self, Primitive) -> Double raise GasError
 pub fn Gas::specific_energy(Self, Primitive) -> Double raise GasError
 pub fn Gas::to_repr(Self) -> @debug.Repr
+pub fn Gas::validate_cells(Self, Mesh, Array[Conserved]) -> Unit raise GasError
+
+pub struct Mesh {
+  left : Double
+  right : Double
+  cells : Int32
+  dx : Double
+} derive(Eq, @debug.Debug)
+pub fn Mesh::cells(Self) -> Int32
+pub fn Mesh::center(Self, Int32) -> Double raise GasError
+pub fn Mesh::dx(Self) -> Double
+pub fn Mesh::edge(Self, Int32) -> Double raise GasError
+pub fn Mesh::equal(Self, Self) -> Bool
+pub fn Mesh::left(Self) -> Double
+pub fn Mesh::locate(Self, Double) -> Int32 raise GasError
+pub fn Mesh::new(Double, Double, Int32) -> Self raise GasError
+pub fn Mesh::not_equal(Self, Self) -> Bool
+pub fn Mesh::right(Self) -> Double
+pub fn Mesh::to_repr(Self) -> @debug.Repr
 
 pub(all) struct Primitive {
   rho : Double
