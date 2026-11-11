@@ -44,3 +44,7 @@ GitHub REST 仓库及代码搜索每页100：FITS、rainflow、COMTRADE、LLL、
 共享“有限体积”“CFL”“Riemann”术语本身不是新颖性。独立建设的必要性是气体密度/动量/总能量、热力学物理状态、双波族/接触间断与精确 Riemann 参照的完整一致接口；扩展浅水或不可压缩应用会引入另一套方程和状态模型。SWE水深/流量和压力Poisson流程无法作为此库直接输入/输出契约。
 
 未选方向还包括已有 BioSeqs 系统发育、thinfilm_tmm 偏振和数值插值；未将模糊关键词零命中当作独特性。通过结论限于上述日期、查询、返回页及可读源码范围，GitHub索引和私有/未索引实现可能遗漏，不宣称绝对唯一。实现前已持永久注册表同一路径排他锁重读并原子预留；发布前再次执行核心行为反查。
+
+## 发布前复核（2026-11-11）
+
+通过指定账号的隔离 GitHub API 再查 `Godunov language:MoonBit`、`shock_tube language:MoonBit` 和 `Rusanov language:MoonBit`，各返回 0 项；精确仓库 `ZJH-666-ZJH/moonshock` 返回 404，尚未创建。该复核补充既有源码比较，受公开索引和查询表述限制，不证明绝对唯一。

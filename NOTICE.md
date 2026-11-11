@@ -3,6 +3,7 @@
 MoonShock 是独立实现的一维理想气体 Euler 求解库，不是对既有项目代码的翻译或移植。
 
 - 数学基线：[Clawpack Riemann Book, Euler equations](https://www.clawpack.org/riemann_book/html/Euler.html)。参照其公认方程、激波/稀疏波分类和 Riemann 问题定义；没有复制程序、图像或数据文件。本项目的精确解采用带括号二分，Python 对照独立采用 Newton 及守恒条件。
+- 该参考书的程序按 [BSD-3-Clause](https://github.com/clawpack/riemann_book/blob/master/LICENSE-CODE) 提供，正文按 [CC BY-NC-ND 4.0](https://github.com/clawpack/riemann_book/blob/master/LICENSE-TEXT.md) 提供。这里只引用公认数学方程与方法，没有复制或改编其程序、正文、图像或数据；这些资料不纳入本项目的 MIT 授权。
 - HLL、Rusanov、Minmod、MC、SSPRK2 是公开数值方法名。本仓库实现和回归样例由本项目编写。
 - [moonbitlang/core](https://github.com/moonbitlang/core) 随官方工具链使用，按该项目自身许可证提供，不在本仓库重新包装发布。
 - 相邻 MoonBit 项目 moon_hydro、FlowLabLite 仅用于判断能力重合，未复制其源代码。具体可核查差异见选题证据。
