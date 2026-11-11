@@ -82,7 +82,11 @@ pub fn Gas::specific_energy(self : Gas, q : Primitive) -> Double raise GasError 
 
 ///|
 pub fn Gas::mach(self : Gas, q : Primitive) -> Double raise GasError {
-  q.velocity / self.sound_speed(q)
+  let result = q.velocity / self.sound_speed(q)
+  if !finite(result) {
+    raise Numerical("Mach number overflow")
+  }
+  result
 }
 
 ///|

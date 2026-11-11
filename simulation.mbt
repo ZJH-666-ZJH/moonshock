@@ -120,9 +120,13 @@ pub fn Simulation::diagnostics(self : Simulation) -> Diagnostics raise GasError 
 pub fn Simulation::conservation_residual(
   self : Simulation,
 ) -> Conserved raise GasError {
-  self.diagnostics().totals
-  .minus(self.initial_totals)
-  .minus(self.boundary_change)
+  let result = self.diagnostics().totals
+    .minus(self.initial_totals)
+    .minus(self.boundary_change)
+  if !finite(result.mass) || !finite(result.momentum) || !finite(result.energy) {
+    raise Numerical("conservation ledger overflow")
+  }
+  result
 }
 
 ///|
