@@ -15,6 +15,8 @@ pub fn reconstruct(Array[Primitive], Boundaries, Reconstruction) -> (Array[Primi
 
 pub fn restore_checkpoint(String) -> Simulation raise GasError
 
+pub fn run_batch(Array[Experiment]) -> Array[BatchOutcome] raise GasError
+
 // Errors
 pub suberror GasError {
   Invalid(String)
@@ -23,6 +25,12 @@ pub suberror GasError {
 pub fn GasError::to_repr(Self) -> @debug.Repr
 
 // Types and methods
+pub(all) enum BatchOutcome {
+  Succeeded(ExperimentResult)
+  Failed(String, String)
+} derive(@debug.Debug)
+pub fn BatchOutcome::to_repr(Self) -> @debug.Repr
+
 pub(all) enum Boundaries {
   Periodic
   Ends(EndBoundary, EndBoundary)
@@ -75,6 +83,28 @@ pub(all) struct ErrorNorm {
 } derive(ToJson, @debug.Debug)
 pub fn ErrorNorm::to_json(Self) -> Json
 pub fn ErrorNorm::to_repr(Self) -> @debug.Repr
+
+pub struct Experiment {
+  name : String
+  gas : Gas
+  mesh : Mesh
+  left : Primitive
+  right : Primitive
+  interface_at : Double
+  end_time : Double
+  config : SolverConfig
+} derive(@debug.Debug)
+pub fn Experiment::new(String, Gas, Mesh, Primitive, Primitive, Double, Double, SolverConfig) -> Self raise GasError
+pub fn Experiment::run(Self) -> ExperimentResult raise GasError
+pub fn Experiment::to_repr(Self) -> @debug.Repr
+
+pub(all) struct ExperimentResult {
+  name : String
+  simulation : Simulation
+  density_error : ErrorNorm
+  reference_unaffected_by_boundaries : Bool
+} derive(@debug.Debug)
+pub fn ExperimentResult::to_repr(Self) -> @debug.Repr
 
 pub(all) enum FluxMethod {
   Hll
