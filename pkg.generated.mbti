@@ -1,0 +1,46 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "ZJH-666-ZJH/moonshock"
+
+import {
+  "moonbitlang/core/debug",
+  "moonbitlang/core/json",
+}
+
+// Values
+
+// Errors
+pub suberror GasError {
+  Invalid(String)
+  Numerical(String)
+} derive(@debug.Debug)
+pub fn GasError::to_repr(Self) -> @debug.Repr
+
+// Types and methods
+pub struct Gas {
+  gamma : Double
+} derive(Eq, @debug.Debug)
+pub fn Gas::equal(Self, Self) -> Bool
+pub fn Gas::gamma(Self) -> Double
+pub fn Gas::mach(Self, Primitive) -> Double raise GasError
+pub fn Gas::new(Double) -> Self raise GasError
+pub fn Gas::not_equal(Self, Self) -> Bool
+pub fn Gas::sound_speed(Self, Primitive) -> Double raise GasError
+pub fn Gas::specific_energy(Self, Primitive) -> Double raise GasError
+pub fn Gas::to_repr(Self) -> @debug.Repr
+
+pub(all) struct Primitive {
+  rho : Double
+  velocity : Double
+  pressure : Double
+} derive(Eq, ToJson, @debug.Debug, @json.FromJson)
+pub fn Primitive::equal(Self, Self) -> Bool
+pub fn Primitive::from_json(Json, @json.JsonPath) -> Self raise @json.JsonDecodeError
+pub fn Primitive::new(Double, Double, Double) -> Self raise GasError
+pub fn Primitive::not_equal(Self, Self) -> Bool
+pub fn Primitive::to_json(Self) -> Json
+pub fn Primitive::to_repr(Self) -> @debug.Repr
+pub fn Primitive::validate(Self) -> Unit raise GasError
+
+// Type aliases
+
+// Traits
