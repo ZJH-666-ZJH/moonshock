@@ -49,6 +49,14 @@ pub fn EndBoundary::equal(Self, Self) -> Bool
 pub fn EndBoundary::not_equal(Self, Self) -> Bool
 pub fn EndBoundary::to_repr(Self) -> @debug.Repr
 
+pub(all) enum FluxMethod {
+  Hll
+  Rusanov
+} derive(Eq, @debug.Debug)
+pub fn FluxMethod::equal(Self, Self) -> Bool
+pub fn FluxMethod::not_equal(Self, Self) -> Bool
+pub fn FluxMethod::to_repr(Self) -> @debug.Repr
+
 pub struct Gas {
   gamma : Double
 } derive(Eq, @debug.Debug)
@@ -59,6 +67,7 @@ pub fn Gas::mach(Self, Primitive) -> Double raise GasError
 pub fn Gas::max_speed(Self, Primitive) -> Double raise GasError
 pub fn Gas::new(Double) -> Self raise GasError
 pub fn Gas::not_equal(Self, Self) -> Bool
+pub fn Gas::numerical_flux(Self, Primitive, Primitive, FluxMethod) -> Conserved raise GasError
 pub fn Gas::physical_flux(Self, Primitive) -> Conserved raise GasError
 pub fn Gas::primitive(Self, Conserved) -> Primitive raise GasError
 pub fn Gas::sound_speed(Self, Primitive) -> Double raise GasError
