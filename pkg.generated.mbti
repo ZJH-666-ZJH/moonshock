@@ -9,6 +9,8 @@ import {
 // Values
 pub fn boundary_state(Array[Primitive], Int32, Boundaries) -> Primitive raise GasError
 
+pub fn monitors_json(Array[Monitor]) -> String
+
 pub fn reconstruct(Array[Primitive], Boundaries, Reconstruction) -> (Array[Primitive], Array[Primitive]) raise GasError
 
 pub fn restore_checkpoint(String) -> Simulation raise GasError
@@ -138,6 +140,17 @@ pub fn Mesh::not_equal(Self, Self) -> Bool
 pub fn Mesh::right(Self) -> Double
 pub fn Mesh::to_repr(Self) -> @debug.Repr
 
+pub(all) struct Monitor {
+  time : Double
+  steps : Int32
+  retries : Int32
+  diagnostics : Diagnostics
+  conservation_residual : Conserved
+  probes : Array[Probe]
+} derive(ToJson, @debug.Debug)
+pub fn Monitor::to_json(Self) -> Json
+pub fn Monitor::to_repr(Self) -> @debug.Repr
+
 pub(all) struct Primitive {
   rho : Double
   velocity : Double
@@ -150,6 +163,15 @@ pub fn Primitive::not_equal(Self, Self) -> Bool
 pub fn Primitive::to_json(Self) -> Json
 pub fn Primitive::to_repr(Self) -> @debug.Repr
 pub fn Primitive::validate(Self) -> Unit raise GasError
+
+pub(all) struct Probe {
+  x : Double
+  index : Int32
+  state : Primitive
+  mach : Double
+} derive(ToJson, @debug.Debug)
+pub fn Probe::to_json(Self) -> Json
+pub fn Probe::to_repr(Self) -> @debug.Repr
 
 pub(all) enum Reconstruction {
   Constant
@@ -196,7 +218,10 @@ pub fn Simulation::conservation_residual(Self) -> Conserved raise GasError
 pub fn Simulation::diagnostics(Self) -> Diagnostics raise GasError
 pub fn Simulation::gas(Self) -> Gas
 pub fn Simulation::mesh(Self) -> Mesh
+pub fn Simulation::monitor(Self, Array[Double]) -> Monitor raise GasError
 pub fn Simulation::new(Gas, Mesh, Array[Conserved], time? : Double) -> Self raise GasError
+pub fn Simulation::observe(Self, Array[Double], Array[Double], SolverConfig) -> (Self, Array[Monitor]) raise GasError
+pub fn Simulation::probes(Self, Array[Double]) -> Array[Probe] raise GasError
 pub fn Simulation::profile_csv(Self) -> String raise GasError
 pub fn Simulation::remeshed(Self, Mesh) -> Self raise GasError
 pub fn Simulation::retries(Self) -> Int32
